@@ -88,3 +88,105 @@ for (item) in (ex2):  # code
  **Generators**
 
 Generators are simple ways to create iterators. A generator is an iterator and an iterator is an iterable.
+
+
+Here is the **written/transcribed content** from your screenshot:
+
+---
+
+### **Generators**
+
+Generators are simple ways to create iterators. A generator is an iterator and an iterator is an iterable.
+
+---
+
+ Extract values one by one**
+
+Start with `iter()` to get iterator over iterable and use `next()` to get elements one by one until `StopIteration` is raised signifying the end:
+
+```python
+s = (1, 2)  # or list or generator or even iterator
+i = iter(s)  # get iterator
+a = next(i)  # a = 1
+b = next(i)  # b = 2
+c = next(i)  # raises StopIteration
+```
+
+---
+
+ Iterating over entire iterable**
+
+```python
+s = (1, 2, 3)
+
+# get every element in s
+for a in s:
+    print(a)  # prints 1, then 2, then 3
+
+# copy into list
+l1 = list(s)  # l1 = [1, 2, 3]
+
+# use list comprehension
+l2 = [a * 2 for a in s if a > 2]  # l2 = [6]
+```
+
+---
+
+
+Verify only one element in iterable**
+
+Use unpacking to extract the first element and ensure it's the only one:
+
+```python
+a, = iterable
+
+def foo():
+    yield 1
+
+a, = foo()  # a = 1
+
+nums = [1, 2, 3]
+a, = nums  # ValueError: too many values to unpack
+```
+
+---
+
+What can be iterable**
+
+Iterable can be anything for which items are received **one by one, forward only**. Built-in Python collections are iterable:
+
+```python
+[1, 2, 3]      # list, iterate over items
+(1, 2, 3)      # tuple
+{1, 2, 3}      # set
+{1: 2, 3: 4}   # dict, iterate over keys
+```
+
+Generators return iterables:
+
+```python
+def foo():  # foo isn't iterable yet...
+    yield 1
+
+res = foo()  # ...but res already is
+```
+
+---
+
+
+Iterator isn’t reentrant!**
+
+```python
+def gen():
+    yield 1
+
+iterable = gen()
+
+for i in iterable:
+    print(i)
+
+# What was the first item of iterable? No way to get it now.
+# Only to get a new iterator
+gen()
+```
+
